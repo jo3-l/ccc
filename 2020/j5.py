@@ -1,9 +1,7 @@
-# This solution grabs 11/15 available points, others fail with RecursionError...
+# This implementation gets 13/15, still looking for ways to get 15/15
+import collections
 
-# A set of already visited cell values. Given that we have already visited the
-# cell with the value X, it is unnecessary to revisit it as all valid moves
-# should already have been played.
-already_visited = set()
+visited = set()
 
 max_rows = int(input())
 max_cols = int(input())
@@ -17,14 +15,9 @@ for _ in range(max_rows):
 # 1-based) that are valid moves from a cell with the given value.
 def possible_moves(row, col):
     val = matrix[row][col]
-    if val in already_visited:
-        # Already visited a cell with this value.
-        return
 
     if (max_rows * max_cols) < val:
         return
-
-    already_visited.add(val)
 
     # 1001^2 > 1000000... hacky, but it works so :/
     for possible_row in range(1, 1001):
@@ -44,16 +37,18 @@ def possible_moves(row, col):
                 yield matching_col - 1, possible_row - 1
 
 
-def traverse(row, col):
-    # If it's the exit...
-    if (row == max_rows - 1) and (col == max_cols - 1):
-        return True
-
-    for new_row, new_col in possible_moves(row, col):
-        if traverse(new_row, new_col):
-            return True
+def bfs(row, col):
+    queue = collections.deque([(row, col)])
+    while queue:
+        vertex = queue.popleft()
+        for row, col in possible_moves(*vertex):
+            if row == max_rows - 1 and col == max_cols - 1:
+                return True
+            if (row, col) not in visited:
+                visited.add((row, col))
+                queue.append((row, col))
 
     return False
 
 
-print("yes" if traverse(0, 0) else "no")
+print("yes" if bfs(0, 0) else "no")
