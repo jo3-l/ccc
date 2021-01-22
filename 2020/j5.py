@@ -18,11 +18,7 @@ matrix[max_rows - 1][max_cols - 1] = END_ROOM_TOKEN
 # cell value.
 def possible_moves(val):
     # TODO: find the proper range for this using math
-    # 1000^2 > 1000000... hacky, but it works so :/
-    for possible_row in range(1, 1001):
-        if possible_row > max_rows:
-            break
-
+    for possible_row in range(1, max_rows + 1):
         if val % possible_row == 0:
             matching_col = val // possible_row
             if matching_col > max_cols:
