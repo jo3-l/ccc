@@ -19,6 +19,7 @@ def possible_moves(row, col):
     if (max_rows * max_cols) < val:
         return
 
+    # TODO: find the proper range for this using math
     # 1001^2 > 1000000... hacky, but it works so :/
     for possible_row in range(1, 1001):
         if possible_row > max_rows:
@@ -42,10 +43,11 @@ def bfs(row, col):
     while queue:
         vertex = queue.popleft()
         for row, col in possible_moves(*vertex):
+            val = matrix[row][col]
             if row == max_rows - 1 and col == max_cols - 1:
                 return True
-            if (row, col) not in visited:
-                visited.add((row, col))
+            if val not in visited:
+                visited.add(val)
                 queue.append((row, col))
 
     return False
