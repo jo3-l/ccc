@@ -1,5 +1,6 @@
 # This implementation gets 13/15, still looking for ways to get 15/15
 import collections
+import math
 
 # Value symbolizing the end of the room.
 END_ROOM_TOKEN = -1
@@ -17,8 +18,9 @@ matrix[max_rows - 1][max_cols - 1] = END_ROOM_TOKEN
 # Returns an iterator over the cell values that can be jumped to from the given
 # cell value.
 def possible_moves(val):
-    # TODO: find the proper range for this using math
-    for possible_row in range(1, max_rows + 1):
+    min_bound = math.ceil(val / max(max_cols, max_rows))
+    max_bound = max_rows + 1
+    for possible_row in range(min_bound, max_bound):
         if val % possible_row == 0:
             matching_col = val // possible_row
             if matching_col > max_cols:
