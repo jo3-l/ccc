@@ -1,26 +1,27 @@
 # This implementation gets 13/15, still looking for ways to get 15/15
 import collections
 
-visited = set()
-
 max_rows = int(input())
 max_cols = int(input())
+
+# Value symbolizing the end of the room.
+END_ROOM_TOKEN = -1
 
 matrix = []
 for _ in range(max_rows):
     matrix.append([int(x) for x in input().split(" ")])
 
+matrix[max_rows - 1][max_cols - 1] = END_ROOM_TOKEN
 
-# Returns an iterator over the possible row and column pairs (0-based, not
-# 1-based) that are valid moves from a cell with the given value.
-def possible_moves(row, col):
-    val = matrix[row][col]
 
+# Returns an iterator over the cell values that can be jumped to from the given
+# cell value.
+def possible_moves(val):
     if (max_rows * max_cols) < val:
         return
 
     # TODO: find the proper range for this using math
-    # 1001^2 > 1000000... hacky, but it works so :/
+    # 1000^2 > 1000000... hacky, but it works so :/
     for possible_row in range(1, 1001):
         if possible_row > max_rows:
             break
@@ -31,24 +32,24 @@ def possible_moves(row, col):
                 continue
 
             # Subtract one because our rows and columns are 1-based.
-            yield possible_row - 1, matching_col - 1
+            yield matrix[possible_row - 1][matching_col - 1]
             if possible_row != matching_col:
                 if matching_col > max_rows or possible_row > max_cols:
                     continue
-                yield matching_col - 1, possible_row - 1
+                yield matrix[matching_col - 1][possible_row - 1]
 
 
 def bfs(row, col):
-    queue = collections.deque([(row, col)])
+    visited = set()
+    queue = collections.deque([matrix[row][col]])
     while queue:
-        vertex = queue.popleft()
-        for row, col in possible_moves(*vertex):
-            val = matrix[row][col]
-            if row == max_rows - 1 and col == max_cols - 1:
+        val = queue.popleft()
+        for possible_val in possible_moves(val):
+            if possible_val == END_ROOM_TOKEN:
                 return True
-            if val not in visited:
-                visited.add(val)
-                queue.append((row, col))
+            if possible_val not in visited:
+                visited.add(possible_val)
+                queue.append(possible_val)
 
     return False
 
