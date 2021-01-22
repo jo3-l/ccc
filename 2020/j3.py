@@ -1,5 +1,3 @@
-import math
-
 n = int(input())
 
 max_x = -1
@@ -12,12 +10,12 @@ for _ in range(n):
     x, y = [int(x) for x in input().split(",")]
     if x > max_x:
         max_x = x
-    elif x < min_x:
+    if x < min_x:
         min_x = x
 
     if y > max_y:
         max_y = y
-    elif y < min_y:
+    if y < min_y:
         min_y = y
 
 print(f"{min_x - 1},{min_y - 1}")
