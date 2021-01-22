@@ -1,5 +1,4 @@
-# TODO: This doesn't even work :/
-import math
+# This solution grabs 11/15 available points, others fail with RecursionError...
 
 # A set of already visited cell values. Given that we have already visited the
 # cell with the value X, it is unnecessary to revisit it as all valid moves
@@ -27,19 +26,21 @@ def possible_moves(row, col):
 
     already_visited.add(val)
 
-    # This can probably be optimized with some clever math such that the index
-    # bounds can be left unchecked, but it's not too bad and I don't have access
-    # to larger inputs so I can't really test my implementation performance :/
-    for possible_row in range(1, math.ceil(math.sqrt(val))):
+    # 1001^2 > 1000000... hacky, but it works so :/
+    for possible_row in range(1, 1001):
         if possible_row > max_rows:
             break
+
         if val % possible_row == 0:
             matching_col = val // possible_row
             if matching_col > max_cols:
                 continue
+
             # Subtract one because our rows and columns are 1-based.
             yield possible_row - 1, matching_col - 1
             if possible_row != matching_col:
+                if matching_col > max_rows or possible_row > max_cols:
+                    continue
                 yield matching_col - 1, possible_row - 1
 
 
