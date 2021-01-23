@@ -14,15 +14,11 @@ square = [["1", "2"], ["3", "4"]]
 # Two vertical flips -> no change. Two horizontal flips -> no change. Therefore,
 # we only need to handle the case where the numbers are odd.
 if num_horizontal % 2 == 1:
-    square[0], square[1] = square[1], square[0]
+    square.reverse()
 
 if num_vertical % 2 == 1:
-    square[0][0], square[0][1], square[1][0], square[1][1] = (
-        square[0][1],
-        square[0][0],
-        square[1][1],
-        square[1][0],
-    )
+    square[0].reverse()
+    square[1].reverse()
 
 print(f"{' '.join(square[0])}\n{' '.join(square[1])}")
 
