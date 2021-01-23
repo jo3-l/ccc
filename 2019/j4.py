@@ -8,12 +8,14 @@ for c in v:
     else:
         num_vertical += 1
 
+# Strings for easier formatting later.
 square = [["1", "2"], ["3", "4"]]
 
-# Two vertical flips = no change. Two horizontal flips = no change. Therefore,
+# Two vertical flips -> no change. Two horizontal flips -> no change. Therefore,
 # we only need to handle the case where the numbers are odd.
 if num_horizontal % 2 == 1:
     square[0], square[1] = square[1], square[0]
+
 if num_vertical % 2 == 1:
     square[0][0], square[0][1], square[1][0], square[1][1] = (
         square[0][1],
