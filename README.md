@@ -33,8 +33,8 @@ _A checked box indicates there is a full solution getting full points, while an 
 -   [x] [J2: Epidemiology](./2020/j2.py)
 -   [x] [J3: Art](./2020/j3.py)
 -   [x] [J4: Cyclic Shifts](./2020/j4.py)
--   [ ] [J5: Escape Room](./2020/j5.py)
-    -   Partial solution. Gets 13/15 points but times out on the last batch of inputs.
+-   [x] [J5: Escape Room](./2020/J5.java)
+    -   The Java solution gets full points (15/15) while the Python solution TLEs on the last batch (13/15).
 
 ### CC '19
 
